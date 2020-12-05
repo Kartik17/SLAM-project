@@ -22,40 +22,41 @@
 #include<iostream>
 #include<algorithm>
 #include<fstream>
-#include<chrono>
 #include<iomanip>
+#include<chrono>
 #include<unistd.h>
 
 #include<opencv2/core/core.hpp>
 #include<opencv2/imgcodecs/legacy/constants_c.h>
 
-#include"System.h"
-
-// #define ORBSLAMMASK 1
+#include<System.h>
 
 using namespace std;
 
-void LoadImages(const string &strSequence, vector<string> &vstrImageFilenames, vector<string> &vstrMaskFilenames,
-                vector<double> &vTimestamps);
+#define ORBSLAMMASK
+
+void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
+                vector<string> &vstrImageRight, vector<string> &vstrImageMask, vector<double> &vTimestamps);
 
 int main(int argc, char **argv)
 {
     if(argc != 4)
     {
-        cerr << endl << "Usage: ./mono_kitti path_to_vocabulary path_to_settings path_to_sequence" << endl;
+        cerr << endl << "Usage: ./stereo_kitti path_to_vocabulary path_to_settings path_to_sequence" << endl;
         return 1;
     }
 
     // Retrieve paths to images
-    vector<string> vstrImageFilenames;
-    vector<string> vstrMaskFilenames;
+    vector<string> vstrImageLeft;
+    vector<string> vstrImageRight;
+    vector<string> vstrImageMask;
     vector<double> vTimestamps;
-    LoadImages(string(argv[3]), vstrImageFilenames, vstrMaskFilenames, vTimestamps);
+    LoadImages(string(argv[3]), vstrImageLeft, vstrImageRight, vstrImageMask, vTimestamps);
 
-    int nImages = vstrImageFilenames.size();
+    const int nImages = vstrImageLeft.size();
 
     // Create SLAM system. It initializes all system threads and gets ready to process frames.
-    ORB_SLAM2::System SLAM(argv[1],argv[2],ORB_SLAM2::System::MONOCULAR,true);
+    ORB_SLAM2::System SLAM(argv[1],argv[2],ORB_SLAM2::System::STEREO,true);
 
     // Vector for tracking time statistics
     vector<float> vTimesTrack;
@@ -63,31 +64,34 @@ int main(int argc, char **argv)
 
     cout << endl << "-------" << endl;
     cout << "Start processing sequence ..." << endl;
-    cout << "Images in the sequence: " << nImages << endl << endl;
+    cout << "Images in the sequence: " << nImages << endl << endl;   
 
     // Main loop
-    cv::Mat im;
+    cv::Mat imLeft, imRight;
     cv::Mat semanticmask;
     for(int ni=0; ni<nImages; ni++)
     {
-        // Read image from file
-        im = cv::imread(vstrImageFilenames[ni],CV_LOAD_IMAGE_UNCHANGED);
-
+        // Read left and right images from file
+        imLeft = cv::imread(vstrImageLeft[ni],CV_LOAD_IMAGE_UNCHANGED);
+        imRight = cv::imread(vstrImageRight[ni],CV_LOAD_IMAGE_UNCHANGED);
+        
 #ifdef ORBSLAMMASK
-        semanticmask = cv::imread(vstrMaskFilenames[ni],CV_LOAD_IMAGE_UNCHANGED);
+        semanticmask = cv::imread(vstrImageMask[ni],CV_LOAD_IMAGE_UNCHANGED);
 #endif
+
         double tframe = vTimestamps[ni];
 
-        if(im.empty())
+        if(imLeft.empty())
         {
-            cerr << endl << "Failed to load image at: " << vstrImageFilenames[ni] << endl;
+            cerr << endl << "Failed to load image at: "
+                 << string(vstrImageLeft[ni]) << endl;
             return 1;
         }
 
 #ifdef ORBSLAMMASK
         if(semanticmask.empty())
         {
-            cerr << endl << "Failed to load mask at: " << vstrMaskFilenames[ni] << endl;
+            cerr << endl << "Failed to load mask at: " << vstrImageMask[ni] << endl;
             return 1;
         }
 #endif
@@ -98,8 +102,8 @@ int main(int argc, char **argv)
         std::chrono::monotonic_clock::time_point t1 = std::chrono::monotonic_clock::now();
 #endif
 
-        // Pass the image to the SLAM system
-        SLAM.TrackMonocular(im,tframe,semanticmask);
+        // Pass the images to the SLAM system
+        SLAM.TrackStereo(imLeft,imRight,tframe,semanticmask);
 
 #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();
@@ -137,12 +141,13 @@ int main(int argc, char **argv)
     cout << "mean tracking time: " << totaltime/nImages << endl;
 
     // Save camera trajectory
-    SLAM.SaveKeyFrameTrajectoryTUM("KeyFrameTrajectory.txt");    
+    SLAM.SaveTrajectoryKITTI("CameraTrajectory.txt");
 
     return 0;
 }
 
-void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilenames, vector<string> &vstrMaskFilenames, vector<double> &vTimestamps)
+void LoadImages(const string &strPathToSequence, vector<string> &vstrImageLeft,
+                vector<string> &vstrImageRight, vector<string> &vstrImageMask, vector<double> &vTimestamps)
 {
     ifstream fTimes;
     string strPathTimeFile = strPathToSequence + "/times.txt";
@@ -162,17 +167,20 @@ void LoadImages(const string &strPathToSequence, vector<string> &vstrImageFilena
     }
 
     string strPrefixLeft = strPathToSequence + "/image_0/";
-    string strPrefixLeftMask = strPathToSequence + "/semantic/";
+    string strPrefixRight = strPathToSequence + "/image_1/";
+    string strPrefixMask = strPathToSequence + "/semantic/";
 
     const int nTimes = vTimestamps.size();
-    vstrImageFilenames.resize(nTimes);
-    vstrMaskFilenames.resize(nTimes);
+    vstrImageLeft.resize(nTimes);
+    vstrImageRight.resize(nTimes);
+    vstrImageMask.resize(nTimes);
 
     for(int i=0; i<nTimes; i++)
     {
         stringstream ss;
         ss << setfill('0') << setw(6) << i;
-        vstrImageFilenames[i] = strPrefixLeft + ss.str() + ".png";
-        vstrMaskFilenames[i] = strPrefixLeftMask + ss.str() + ".png";
+        vstrImageLeft[i] = strPrefixLeft + ss.str() + ".png";
+        vstrImageRight[i] = strPrefixRight + ss.str() + ".png";
+        vstrImageMask[i] = strPrefixMask + ss.str() + ".png";
     }
 }

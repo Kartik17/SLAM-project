@@ -40,6 +40,7 @@
 
 #include<mutex>
 
+#define ORBSLAMMASK 1
 
 using namespace std;
 
@@ -167,7 +168,7 @@ void Tracking::SetViewer(Viewer *pViewer)
 }
 
 
-cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRectRight, const double &timestamp)
+cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRectRight, const double &timestamp, const cv::Mat &semanticmask)
 {
     mImGray = imRectLeft;
     cv::Mat imGrayRight = imRectRight;
@@ -199,7 +200,28 @@ cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRe
         }
     }
 
-    mCurrentFrame = Frame(mImGray,imGrayRight,timestamp,mpORBextractorLeft,mpORBextractorRight,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+    cv::Mat semanticmask_ = semanticmask;
+
+#ifdef ORBSLAMMASK
+
+    // Check if image has more than one channel and convert it to greyscale
+    if(semanticmask_.channels()==3)
+    {
+        if(mbRGB)
+            cvtColor(semanticmask_,semanticmask_,CV_RGB2GRAY);
+        else
+            cvtColor(semanticmask_,semanticmask_,CV_BGR2GRAY);
+    }
+    else if(semanticmask_.channels()==4)
+    {
+        if(mbRGB)
+            cvtColor(semanticmask_,semanticmask_,CV_RGBA2GRAY);
+        else
+            cvtColor(semanticmask_,semanticmask_,CV_BGRA2GRAY);
+    }
+#endif
+
+    mCurrentFrame = Frame(mImGray,imGrayRight,timestamp,mpORBextractorLeft,mpORBextractorRight,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth,true,semanticmask_);
 
     Track();
 
@@ -207,7 +229,7 @@ cv::Mat Tracking::GrabImageStereo(const cv::Mat &imRectLeft, const cv::Mat &imRe
 }
 
 
-cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, const double &timestamp)
+cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, const double &timestamp,const cv::Mat &semanticmask)
 {
     mImGray = imRGB;
     cv::Mat imDepth = imD;
@@ -230,7 +252,28 @@ cv::Mat Tracking::GrabImageRGBD(const cv::Mat &imRGB,const cv::Mat &imD, const d
     if((fabs(mDepthMapFactor-1.0f)>1e-5) || imDepth.type()!=CV_32F)
         imDepth.convertTo(imDepth,CV_32F,mDepthMapFactor);
 
-    mCurrentFrame = Frame(mImGray,imDepth,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth);
+    cv::Mat semanticmask_ = semanticmask;
+
+#ifdef ORBSLAMMASK
+
+    // Check if image has more than one channel and convert it to greyscale
+    if(semanticmask_.channels()==3)
+    {
+        if(mbRGB)
+            cvtColor(semanticmask_,semanticmask_,CV_RGB2GRAY);
+        else
+            cvtColor(semanticmask_,semanticmask_,CV_BGR2GRAY);
+    }
+    else if(semanticmask_.channels()==4)
+    {
+        if(mbRGB)
+            cvtColor(semanticmask_,semanticmask_,CV_RGBA2GRAY);
+        else
+            cvtColor(semanticmask_,semanticmask_,CV_BGRA2GRAY);
+    }
+#endif
+
+    mCurrentFrame = Frame(mImGray,imDepth,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth,true,semanticmask_);
 
     Track();
 
@@ -258,11 +301,32 @@ cv::Mat Tracking::GrabImageMonocular(const cv::Mat &im, const double &timestamp,
             cvtColor(mImGray,mImGray,CV_BGRA2GRAY);
     }
 
+    cv::Mat semanticmask_ = semanticmask;
+
+#ifdef ORBSLAMMASK
+
+    // Check if image has more than one channel and convert it to greyscale
+    if(semanticmask_.channels()==3)
+    {
+        if(mbRGB)
+            cvtColor(semanticmask_,semanticmask_,CV_RGB2GRAY);
+        else
+            cvtColor(semanticmask_,semanticmask_,CV_BGR2GRAY);
+    }
+    else if(semanticmask_.channels()==4)
+    {
+        if(mbRGB)
+            cvtColor(semanticmask_,semanticmask_,CV_RGBA2GRAY);
+        else
+            cvtColor(semanticmask_,semanticmask_,CV_BGRA2GRAY);
+    }
+#endif
+
     // mState stores the state of the map if it is initialied or if it is the first frame
     if(mState==NOT_INITIALIZED || mState==NO_IMAGES_YET)
-        mCurrentFrame = Frame(mImGray,timestamp,mpIniORBextractor,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth,false,semanticmask);
+        mCurrentFrame = Frame(mImGray,timestamp,mpIniORBextractor,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth,false,semanticmask_);
     else
-        mCurrentFrame = Frame(mImGray,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth,true,semanticmask);
+        mCurrentFrame = Frame(mImGray,timestamp,mpORBextractorLeft,mpORBVocabulary,mK,mDistCoef,mbf,mThDepth,true,semanticmask_);
 
     Track();
 

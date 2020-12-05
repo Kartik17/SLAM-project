@@ -30,6 +30,8 @@
 
 #include<System.h>
 
+// #define ORBSLAMMASK 1
+
 using namespace std;
 
 void LoadImages(const string &strFile, vector<string> &vstrImageFilenames,
@@ -81,13 +83,15 @@ int main(int argc, char **argv)
                  << string(argv[3]) << "/" << vstrImageFilenames[ni] << endl;
             return 1;
         }
-
+        
+#ifdef ORBSLAMMASK
         if(semanticmask.empty())
         {
             cerr << endl << "Failed to load mask at: "
                  << string(argv[3]) << "/semantic/" << vstrImageFilenames[ni] << endl;
             return 1;
         }
+#endif
 
         // Record start time taken for the run
 #ifdef COMPILEDWITHC11

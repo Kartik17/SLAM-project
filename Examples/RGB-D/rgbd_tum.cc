@@ -32,6 +32,8 @@
 
 using namespace std;
 
+#define ORBSLAMMASK 1
+
 void LoadImages(const string &strAssociationFilename, vector<string> &vstrImageFilenamesRGB,
                 vector<string> &vstrImageFilenamesD, vector<double> &vTimestamps);
 
@@ -76,11 +78,13 @@ int main(int argc, char **argv)
 
     // Main loop
     cv::Mat imRGB, imD;
+    cv::Mat semanticmask;
     for(int ni=0; ni<nImages; ni++)
     {
         // Read image and depthmap from file
         imRGB = cv::imread(string(argv[3])+"/"+vstrImageFilenamesRGB[ni],CV_LOAD_IMAGE_UNCHANGED);
         imD = cv::imread(string(argv[3])+"/"+vstrImageFilenamesD[ni],CV_LOAD_IMAGE_UNCHANGED);
+        semanticmask = cv::imread(string(argv[3])+"/semantic/"+vstrImageFilenamesRGB[ni],CV_LOAD_IMAGE_UNCHANGED);
         double tframe = vTimestamps[ni];
 
         if(imRGB.empty())
@@ -90,6 +94,15 @@ int main(int argc, char **argv)
             return 1;
         }
 
+#ifdef ORBSLAMMASK
+        if(semanticmask.empty())
+        {
+            cerr << endl << "Failed to load mask at: "
+                 << string(argv[3]) << "/semantic/" << vstrImageFilenamesRGB[ni] << endl;
+            return 1;
+        }        
+#endif
+
 #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point t1 = std::chrono::steady_clock::now();
 #else
@@ -97,7 +110,7 @@ int main(int argc, char **argv)
 #endif
 
         // Pass the image to the SLAM system
-        SLAM.TrackRGBD(imRGB,imD,tframe);
+        SLAM.TrackRGBD(imRGB,imD,tframe,semanticmask);
 
 #ifdef COMPILEDWITHC11
         std::chrono::steady_clock::time_point t2 = std::chrono::steady_clock::now();

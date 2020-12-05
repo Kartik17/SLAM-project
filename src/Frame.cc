@@ -35,6 +35,8 @@
 #include "MapPoint.h"
 #include "ORBextractor.h"
 
+#define ORBSLAMMASK 1
+
 namespace ORB_SLAM2
 {
 
@@ -70,7 +72,7 @@ Frame::Frame(const Frame &frame)
 }
 
 
-Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeStamp, ORBextractor* extractorLeft, ORBextractor* extractorRight, ORBVocabulary* voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth)
+Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeStamp, ORBextractor* extractorLeft, ORBextractor* extractorRight, ORBVocabulary* voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth, bool map_present, const cv::Mat &semanticmask)
     :mpORBvocabulary(voc),mpORBextractorLeft(extractorLeft),mpORBextractorRight(extractorRight), mTimeStamp(timeStamp), mK(K.clone()),mDistCoef(distCoef.clone()), mbf(bf), mThDepth(thDepth),
      mpReferenceKF(static_cast<KeyFrame*>(NULL))
 {
@@ -96,6 +98,12 @@ Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeSt
 
     if(mvKeys.empty())
         return;
+
+#ifdef ORBSLAMMASK
+    // If remove keypoints
+    if(map_present)
+        RemoveKeyPoints(semanticmask, imLeft.rows, imLeft.cols);
+#endif  
 
     UndistortKeyPoints();
 
@@ -128,7 +136,7 @@ Frame::Frame(const cv::Mat &imLeft, const cv::Mat &imRight, const double &timeSt
     AssignFeaturesToGrid();
 }
 
-Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeStamp, ORBextractor* extractor,ORBVocabulary* voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth)
+Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeStamp, ORBextractor* extractor,ORBVocabulary* voc, cv::Mat &K, cv::Mat &distCoef, const float &bf, const float &thDepth, bool map_present, const cv::Mat &semanticmask)
     :mpORBvocabulary(voc),mpORBextractorLeft(extractor),mpORBextractorRight(static_cast<ORBextractor*>(NULL)),
      mTimeStamp(timeStamp), mK(K.clone()),mDistCoef(distCoef.clone()), mbf(bf), mThDepth(thDepth)
 {
@@ -151,6 +159,12 @@ Frame::Frame(const cv::Mat &imGray, const cv::Mat &imDepth, const double &timeSt
 
     if(mvKeys.empty())
         return;
+
+#ifdef ORBSLAMMASK
+    // If remove keypoints
+    if(map_present)
+        RemoveKeyPoints(semanticmask, imGray.rows, imGray.cols);
+#endif   
 
     UndistortKeyPoints();
 
@@ -207,9 +221,11 @@ Frame::Frame(const cv::Mat &imGray, const double &timeStamp, ORBextractor* extra
     if(mvKeys.empty())
         return;
 
+#ifdef ORBSLAMMASK
     // If remove keypoints
     if(map_present)
         RemoveKeyPoints(semanticmask, imGray.rows, imGray.cols);
+#endif
 
     UndistortKeyPoints();
 
@@ -247,9 +263,13 @@ void Frame::RemoveKeyPoints(const cv::Mat &semanticmask, int rows, int cols) {
     // Remove Dynamic KeyPoints
     std::vector<cv::KeyPoint> vKeysTemp;
     cv::Mat DescriptorsTemp;
-    int idx_key = 0;
+
     for (int i = 0; i < N; i++)
     { 
+        cv::Scalar intensity = semanticmask.at<uchar>(cvRound(mvKeys[i].pt.y), cvRound(mvKeys[i].pt.x));
+           
+        cout << "Intensity at pixel: " << intensity << endl;
+
         if (mvKeys[i].pt.x > 2*cols/3)
         {
             continue;
