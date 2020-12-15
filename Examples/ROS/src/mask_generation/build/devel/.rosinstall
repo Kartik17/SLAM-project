@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/mask_generation/build/devel/setup.sh

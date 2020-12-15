@@ -309,6 +309,12 @@ Eigen/Geometry
 ../../../../include/Frame.h
 vector
 -
+opencv2/opencv.hpp
+-
+opencv2/core.hpp
+-
+cstddef
+-
 MapPoint.h
 ../../../../include/MapPoint.h
 Thirdparty/DBoW2/DBoW2/BowVector.h
@@ -321,8 +327,6 @@ KeyFrame.h
 ../../../../include/KeyFrame.h
 ORBextractor.h
 ../../../../include/ORBextractor.h
-opencv2/opencv.hpp
--
 
 ../../../../include/FrameDrawer.h
 Tracking.h
@@ -345,6 +349,18 @@ Frame.h
 ../../../../include/Frame.h
 
 ../../../../include/KeyFrame.h
+stddef.h
+-
+opencv2/core.hpp
+-
+mutex
+-
+map
+-
+set
+-
+vector
+-
 MapPoint.h
 ../../../../include/MapPoint.h
 Thirdparty/DBoW2/DBoW2/BowVector.h
@@ -359,8 +375,6 @@ Frame.h
 ../../../../include/Frame.h
 KeyFrameDatabase.h
 ../../../../include/KeyFrameDatabase.h
-mutex
--
 
 ../../../../include/KeyFrameDatabase.h
 vector
@@ -379,6 +393,12 @@ mutex
 -
 
 ../../../../include/LocalMapping.h
+opencv2/core.hpp
+-
+mutex
+-
+list
+-
 KeyFrame.h
 ../../../../include/KeyFrame.h
 Map.h
@@ -389,10 +409,28 @@ Tracking.h
 ../../../../include/Tracking.h
 KeyFrameDatabase.h
 ../../../../include/KeyFrameDatabase.h
-mutex
--
 
 ../../../../include/LoopClosing.h
+opencv2/core.hpp
+-
+thread
+-
+mutex
+-
+Eigen/Core
+-
+functional
+-
+list
+-
+map
+-
+set
+-
+utility
+-
+vector
+-
 KeyFrame.h
 ../../../../include/KeyFrame.h
 LocalMapping.h
@@ -405,22 +443,22 @@ Tracking.h
 ../../../../include/Tracking.h
 KeyFrameDatabase.h
 ../../../../include/KeyFrameDatabase.h
-thread
--
-mutex
--
 Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h
 ../../../../include/Thirdparty/g2o/g2o/types/types_seven_dof_expmap.h
+Thirdparty/g2o/g2o/types/sim3.h
+../../../../include/Thirdparty/g2o/g2o/types/sim3.h
 
 ../../../../include/Map.h
-MapPoint.h
-../../../../include/MapPoint.h
-KeyFrame.h
-../../../../include/KeyFrame.h
 set
 -
 mutex
 -
+vector
+-
+MapPoint.h
+../../../../include/MapPoint.h
+KeyFrame.h
+../../../../include/KeyFrame.h
 
 ../../../../include/MapDrawer.h
 Map.h
@@ -457,7 +495,7 @@ vector
 -
 list
 -
-opencv/cv.h
+opencv2/core.hpp
 -
 
 ../../../../include/System.h
@@ -489,6 +527,8 @@ Viewer.h
 ../../../../include/Tracking.h
 opencv2/core/core.hpp
 -
+opencv2/imgproc/imgproc_c.h
+-
 opencv2/features2d/features2d.hpp
 -
 Viewer.h
@@ -519,6 +559,10 @@ mutex
 -
 
 ../../../../include/Viewer.h
+mutex
+-
+string
+-
 FrameDrawer.h
 ../../../../include/FrameDrawer.h
 MapDrawer.h
@@ -527,8 +571,6 @@ Tracking.h
 ../../../../include/Tracking.h
 System.h
 ../../../../include/System.h
-mutex
--
 
 /home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/ros_mono.cc
 iostream

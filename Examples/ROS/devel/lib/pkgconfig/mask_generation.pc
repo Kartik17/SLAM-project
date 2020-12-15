@@ -1,0 +1,8 @@
+prefix=/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/devel
+
+Name: mask_generation
+Description: Description of mask_generation
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

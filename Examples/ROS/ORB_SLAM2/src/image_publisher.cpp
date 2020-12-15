@@ -54,16 +54,21 @@ int main(int argc, char** argv)
     }
     ros::init(argc,argv,"image_publisher");
     ros::NodeHandle nh;
-    ros::Publisher image_pub = nh.advertise<sensor_msgs::Image>("/camera/image_raw",5);
+    ros::Publisher image_pub = nh.advertise<sensor_msgs::Image>("/camera/rgb/image_raw",5);
+    ros::Publisher image_pub2 = nh.advertise<sensor_msgs::Image>("camera/depth_registered/image_raw",5);
 
 
     // Retrive path to images 
-    std::vector<string> vstrImageFilenames;
-    std::vector<double> vTimestamps;
-    std::string strFile = string(argv[1])+"/rgb.txt";
-    LoadImages(strFile, vstrImageFilenames, vTimestamps);
+    std::vector<string> vstrImageFilenames_rgb;
+    std::vector<double> vTimestamps_rgb;
+    std::string strFile_rgb = string(argv[1])+"/rgb.txt";
+    LoadImages(strFile_rgb, vstrImageFilenames_rgb, vTimestamps_rgb);
+    std::vector<string> vstrImageFilenames_d;
+    std::vector<double> vTimestamps_d;
+    std::string strFile_d = string(argv[1])+"/depth.txt";
+    LoadImages(strFile_d, vstrImageFilenames_d, vTimestamps_d);
 
-    int nImages = vstrImageFilenames.size();
+    int nImages = vstrImageFilenames_d.size();
 
     try
     {
@@ -79,12 +84,17 @@ int main(int argc, char** argv)
         for(int i=0;i<nImages;++i)
         {
             // Read image from file
-            image = cv::imread(string(argv[1])+"/"+vstrImageFilenames[i],CV_LOAD_IMAGE_UNCHANGED);
+            image = cv::imread(string(argv[1])+"/"+vstrImageFilenames_rgb[i],CV_LOAD_IMAGE_UNCHANGED);
             header.seq = i;
             header.stamp = ros::Time::now();//vTimestamps[i];
             img_bridge = cv_bridge::CvImage(header,sensor_msgs::image_encodings::RGB8,image);
             img_bridge.toImageMsg(img_msg);
             image_pub.publish(img_msg);
+            // Read image from file
+            image = cv::imread(string(argv[1])+"/"+vstrImageFilenames_d[i],CV_LOAD_IMAGE_UNCHANGED);
+            img_bridge = cv_bridge::CvImage(header,sensor_msgs::image_encodings::TYPE_16UC1,image);
+            img_bridge.toImageMsg(img_msg);
+            image_pub2.publish(img_msg);
             ros::spinOnce();
             ros_rate.sleep();
 
