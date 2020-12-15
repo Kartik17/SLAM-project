@@ -5,6 +5,10 @@ DATASET:
     TIMESTAMPS : './seq/2011_09_30_drive_0018_sync/timestamps.txt'
     ODOM_PATH : './seq/2011_09_30_drive_0018_sync/05.txt'
     MAX_VEL: 1.5
+    MASK_POINTS: 20.0
+    MAX_DEPTH: 50.0
+    MIN_DEPTH: 1.0
+    MAX_IOU: 0.80
     TRANSFORMS:
       Velo2cam : [[7.533745e-03, -9.999714e-01, -6.166020e-04, -4.069766e-03], 
                   [1.480249e-02,  7.280733e-04, -9.998902e-01, -7.631618e-02], 
@@ -22,6 +26,10 @@ DATASET:
     DEPTH_PATH : './seq/rgbd_dataset_freiburg3_walking_rpy/depth'
     ODOM_PATH :  './seq/rgbd_dataset_freiburg3_walking_rpy/groundtruth'
     MAX_VEL: 0.1
+    MASK_POINTS: 20.0
+    MAX_DEPTH: 50.0
+    MIN_DEPTH: 0.0
+    MAX_IOU: 0.80
     DEPTH_FACTOR: 5000.0
 
     CAMERA:
@@ -55,9 +63,18 @@ CLASSES:
   NON_RIGID: ['person', 'bird', 'cat', 'dog', 'horse']
 
 SAVE_MASK : True
+<<<<<<< HEAD:Examples/ROS/src/mask_generation/src/config.yaml
 USE_CUDA : True
 MASK_POINTS: 20.0
 MAX_DEPTH: 50.0
 MAX_IOU: 0.85
 PUBLISH_ROS_TOPIC: True
 ROS_TOPIC: "/segmentation_mask"
+||||||| merged common ancestors
+USE_CUDA : True
+MASK_POINTS: 20.0
+MAX_DEPTH: 50.0
+MAX_IOU: 0.85
+=======
+USE_CUDA  : True
+>>>>>>> b05e2e1c729f54455da9c1d2dca372bf46c4e2c2:config.yaml

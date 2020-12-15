@@ -34,16 +34,20 @@ class Detector(object):
         self.bridge = CvBridge()
 
         if(self.dataset == 'kitti'):
+            self.rgb_path = self.config['DATASET']['KITTI']['DATA_PATH']
 
-            self.sequence_list = os.listdir(self.config['DATASET']['KITTI']['DATA_PATH'])
+            self.sequence_list = os.listdir(self.rgb_path)
             self.velo2cam = np.array(self.config['DATASET']['KITTI']['TRANSFORMS']['Velo2cam'])
             
             self.kitti_timestamps = open(self.config['DATASET']['KITTI']['TIMESTAMPS']).readlines()
             self.kitti_odom = open(self.config['DATASET']['KITTI']['ODOM_PATH']).readlines()
 
-            self.matches = sorted(self.sequence_list)
-            self.max_vel = self.config['DATASET']['KITTI']['MAX_VEL']
-
+            self.matches     = sorted(self.sequence_list)
+            self.max_vel     = self.config['DATASET']['KITTI']['MAX_VEL']
+            self.max_iou     = self.config['DATASET']['KITTI']['MAX_IOU']
+            self.max_depth   = self.config['DATASET']['KITTI']['MAX_DEPTH']
+            self.min_depth   = self.config['DATASET']['KITTI']['MIN_DEPTH']
+            self.mask_points = self.config['DATASET']['KITTI']['MASK_POINTS']
 
             self.fx = self.config['DATASET']['KITTI']['CAMERA']['focal_length_x']
             self.fy = self.config['DATASET']['KITTI']['CAMERA']['focal_length_y']
@@ -52,13 +56,24 @@ class Detector(object):
 
         elif(self.dataset == 'tum'):
             #self.deepsort = DeepSort(args.deepsort_checkpoint, use_cuda=use_cuda)
-            self.first_list  = read_file_list(self.config['DATASET']['TUM']['RGB_PATH'] + '.txt')
-            self.second_list = read_file_list(self.config['DATASET']['TUM']['DEPTH_PATH'] + '.txt')
-            self.third_list  = read_file_list(self.config['DATASET']['TUM']['ODOM_PATH'] + '.txt')
+            self.rgb_path = self.config['DATASET']['TUM']['RGB_PATH']
+            self.depth_path = self.config['DATASET']['TUM']['DEPTH_PATH']
+            self.odom_path = self.config['DATASET']['TUM']['ODOM_PATH']
+
+            self.first_list  = read_file_list(self.rgb_path + '.txt')
+            self.second_list = read_file_list(self.depth_path + '.txt')
+            self.third_list  = read_file_list(self.odom_path + '.txt')
             
             self.matches = associate(self.first_list, self.second_list, self.third_list, 0.0,0.02)
 
             self.max_vel = self.config['DATASET']['TUM']['MAX_VEL']
+            self.max_iou = self.config['DATASET']['TUM']['MAX_IOU']
+            self.max_depth = self.config['DATASET']['TUM']['MAX_DEPTH']
+            self.min_depth = self.config['DATASET']['TUM']['MIN_DEPTH']
+            self.depth_factor = self.config['DATASET']['TUM']['DEPTH_FACTOR']
+            self.mask_points = self.config['DATASET']['TUM']['MASK_POINTS']
+
+
             self.fx = self.config['DATASET']['TUM']['CAMERA']['focal_length_x']
             self.fy = self.config['DATASET']['TUM']['CAMERA']['focal_length_y']
             self.cx = self.config['DATASET']['TUM']['CAMERA']['optical_center_x']
@@ -67,6 +82,9 @@ class Detector(object):
         self.class_names = self.config['CLASSES']['ALL']
         self.rigid = self.config['CLASSES']['RIGID']
         self.not_rigid = self.config['CLASSES']['NON_RIGID']
+        self.save_mask = self.config['SAVE_MASK']
+
+        del self.config
 
     def findDepth(self,outputs, cls_ids, masks, T, depth_im):
         upd_dets = []
@@ -74,7 +92,7 @@ class Detector(object):
         
         for idx,box in enumerate(outputs):
             
-            if(np.sum(masks[idx]) > self.config['MASK_POINTS']):
+            if(np.sum(masks[idx]) > self.mask_points):
                 obj_mask = depth_im[masks[idx]]
                 Z = np.sum(obj_mask)/np.count_nonzero(obj_mask)
 
@@ -90,7 +108,7 @@ class Detector(object):
                 R_cam_to_world = T
                 R_world = np.matmul(R_cam_to_world, r_cam).reshape(-1)
 
-                if(Z < self.config['MAX_DEPTH']):
+                if(Z < self.max_depth  and Z > self.min_depth):
                     upd_dets.append([box[0],box[1],box[2],box[3],R_world[0],R_world[1],R_world[2],T, masks[idx], cls_ids[idx], box[4]])
                 else:
                     continue
@@ -113,7 +131,7 @@ class Detector(object):
 
             if(vel >= self.max_vel):
                 if(self.class_names[cls_id] in self.rigid):
-                    if(maskIOUs[i] > self.config['MAX_IOU']):
+                    if(maskIOUs[i] > self.max_iou):
                         label.append(1)     
                     else:
                         label.append(0)
@@ -143,8 +161,8 @@ class Detector(object):
 
                 if len(rgb_name) < 17:
                     rgb_name += '0'*(17 - len(rgb_name))
-                img_path =   os.path.join(  self.config['DATASET']['TUM']['RGB_PATH'], rgb_name + '.png')
-                depth_path = os.path.join(self.config['DATASET']['TUM']['DEPTH_PATH'], str(depth_name) + '.png')
+                img_path =   os.path.join(self.rgb_path, rgb_name + '.png')
+                depth_path = os.path.join(self.depth_path, str(depth_name) + '.png')
                 
                 oxt = self.third_list[odom_name]
                 t = np.array(oxt[:3]).astype('float32')
@@ -152,7 +170,7 @@ class Detector(object):
 
                 if (os.path.isfile(depth_path)):
                     depth_im  = Image.open(depth_path)
-                    depth_im = np.asarray(depth_im)/self.config['DATASET']['TUM']['DEPTH_FACTOR']
+                    depth_im = np.asarray(depth_im)/self.depth_factor
                     
                 else:
                     time_prev = odom_name
@@ -215,7 +233,7 @@ class Detector(object):
                     if(is_static[i] == 0):
                         mask = mask + masks_obj[i]
                 mask = mask.astype('bool').astype('int')*255
-                if(self.config['SAVE_MASK']):
+                if(self.save_mask):
                     cv2.imwrite(save_path + rgb_name + '_mask.png', mask)
                 if(self.config['PUBLISH_ROS_TOPIC']):
                     try:
