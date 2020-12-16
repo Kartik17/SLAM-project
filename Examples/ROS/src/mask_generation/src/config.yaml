@@ -63,18 +63,14 @@ CLASSES:
   NON_RIGID: ['person', 'bird', 'cat', 'dog', 'horse']
 
 SAVE_MASK : True
-<<<<<<< HEAD:Examples/ROS/src/mask_generation/src/config.yaml
 USE_CUDA : True
 MASK_POINTS: 20.0
 MAX_DEPTH: 50.0
 MAX_IOU: 0.85
 PUBLISH_ROS_TOPIC: True
 ROS_TOPIC: "/segmentation_mask"
-||||||| merged common ancestors
 USE_CUDA : True
 MASK_POINTS: 20.0
 MAX_DEPTH: 50.0
 MAX_IOU: 0.85
-=======
 USE_CUDA  : True
->>>>>>> b05e2e1c729f54455da9c1d2dca372bf46c4e2c2:config.yaml

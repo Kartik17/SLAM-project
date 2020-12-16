@@ -4,8 +4,8 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc" "/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o"
-  "/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc" "/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o"
+  "/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ViewerAR.cc" "/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/src/AR/ViewerAR.cc.o"
+  "/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/src/AR/ros_mono_ar.cc" "/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/MonoAR.dir/src/AR/ros_mono_ar.cc.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
@@ -19,14 +19,15 @@ set(CMAKE_TARGET_DEFINITIONS_CXX
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../include"
-  "/opt/ros/melodic/include"
+  "/opt/ros/noetic/include"
+  "/usr/include/opencv4"
   "../"
   "../../../.."
   "../../../../include"
-  "/usr/include/opencv"
-  "/home/lakshmi/SLAM/Pangolin/include"
-  "/home/lakshmi/SLAM/Pangolin/build/src/include"
-  "/usr/local/include/eigen3"
+  "/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/Pangolin/include"
+  "/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/Pangolin/build/src/include"
+  "/usr/local/include/eigen"
+  "/usr/local/include/opencv4"
   )
 
 # Targets to which this target links.
