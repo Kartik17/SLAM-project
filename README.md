@@ -122,11 +122,13 @@ python evaluate_rpe_tum.py PATH_TO_SEQUENCE/groundtruth.txt PATH_TO_ORB_OUTPUT/K
 
 ## Results
 
-#### RMSE Absolute Trajectory Error (ATE) on TUM-RGBD Dataset
-| Sequences      | ORB-SLAM2 | ORB-SLAM2 Masked |
-|----------------|---------------|-------------|
-| walking_static | 0.4030m       | 0.0081m     |
-| walking_xyz    | 0.1780m       | **0.0247m** |
+#### Absolute Trajectory Error (ATE) for TUM-RGBD Dataset
+| Sequences      | ORB-SLAM2 | ORB-SLAM2 Masked | % Improvement |
+|----------------|---------------|-------------|-------------|
+| walking_static |   0.27830     |   0.01560   | 94.39286 |
+| walking_xyz    |    0.57369    | 0.01965 | 96.57480 |
+| walking_rpy    |   0.98395     | 0.20377 | 79.29006 |
+| walking_halfsphere    |    0.77262    | 0.16220 | 79.00567 |
 
 ## Videos
 
