@@ -55,9 +55,37 @@ seq/
 ```
 
 ## How to Run
+### TUM Dataset
+1.Download a sequence from http://vision.in.tum.de/data/datasets/rgbd-dataset/download and uncompress it.
+
+2. Associate RGB images and depth images using the python script associate.py. We already provide associations for some of the sequences in Examples/RGB-D/associations/. You can generate your own associations file executing:
+```
+python associate.py PATH_TO_SEQUENCE/rgb.txt PATH_TO_SEQUENCE/depth.txt > associations.txt
+```
+3. Now we need to refine the masks as per the dataset and send them in proper folder by executing:
+```
+python associate_masks_tum.py PATH_TO_SEQUENCE/rgb/ PATH_TO_MASKS_FOLDER/
+```
+4.Execute the following command. Change TUMX.yaml to TUM1.yaml,TUM2.yaml or TUM3.yaml for freiburg1, freiburg2 and freiburg3 sequences respectively. Change PATH_TO_SEQUENCE_FOLDERto the uncompressed sequence folder. Change ASSOCIATIONS_FILE to the path to the corresponding associations file.
+```
+./Examples/RGB-D/rgbd_tum Vocabulary/ORBvoc.txt Examples/RGB-D/TUMX.yaml PATH_TO_SEQUENCE_FOLDER ASSOCIATIONS_FILE
+```
+
+### KITTI Dataset
+1. Download the dataset (grayscale images) from http://www.cvlibs.net/datasets/kitti/eval_odometry.php
+2. Now we need to refine the masks as per the dataset and send them in proper folder by executing:
+```
+python associate_masks_kitti.py PATH_TO_SEQUENCE/image_0/ PATH_TO_MASKS_FOLDER/
+``` 
+3. Execute the following command. Change KITTIX.yamlto KITTI00-02.yaml, KITTI03.yaml or KITTI04-12.yaml for sequence 0 to 2, 3, and 4 to 12 respectively. Change PATH_TO_DATASET_FOLDER to the uncompressed dataset folder. Change SEQUENCE_NUMBER to 00, 01, 02,.., 11.
+```
+./Examples/Stereo/stereo_kitti Vocabulary/ORBvoc.txt Examples/Stereo/KITTIX.yaml PATH_TO_DATASET_FOLDER/dataset/sequences/SEQUENCE_NUMBER
+```
+
 
 
 ## Evaluation
+### TUM Dataset
 
 
 ## Results
