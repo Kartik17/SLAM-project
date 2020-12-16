@@ -42,7 +42,7 @@ Nr.     Sequence name     Start   End
 09: 2011_09_30_drive_0033 000000 001590
 10: 2011_09_30_drive_0034 000000 001200
 ```
-
+Arrange the data as:
 ```
 seq/
   -2011_09_30_drive_0027_sync/
@@ -53,3 +53,15 @@ seq/
     -07.txt
     -timestamps.txt
 ```
+
+## How to Run
+
+
+## Evaluation
+
+
+## Results
+
+## Videos
+
+
