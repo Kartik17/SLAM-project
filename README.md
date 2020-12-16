@@ -10,6 +10,7 @@ To Install and Run ORB SLAM please refer to the README.md of ORB SLAM
 conda env create -f environment.yml
 
 ## Dataset preparation
+TUM Dataset
 ```
 Seq/
   -rgbd_dataset_freiburg3_walking_rpy/
@@ -19,4 +20,16 @@ Seq/
     -depth.txt
     -groundtruth.txt
     -rgb.txt
+```
+
+KITTI Dataset
+```
+Seq/
+  -2011_09_30_drive_0027_sync/
+    -image_02/
+    -oxts/
+    -proj_depth/
+    -velodyne_points/
+    -07.txt
+    -timestamps.txt
 ```
