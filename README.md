@@ -178,6 +178,7 @@ python evaluate_rpe_tum.py PATH_TO_SEQUENCE/groundtruth.txt PATH_TO_ORB_OUTPUT/K
 TUM-RGBD: [Link](https://drive.google.com/file/d/1RgEYfl090h0glUk0noyzstb6imYtcln4/view?usp=drivesdk)  
 KITTI: [Link](https://drive.google.com/file/d/1mNbfagN9xSnKBdpzUP3oo_CY_Bwmoypb/view?usp=sharing)
 
+![](ORB2_WITHMASK_TUM.gif)
 ![](ORB2_WITHMASK_KITTI.gif)
 
 ## Reference Repositories
