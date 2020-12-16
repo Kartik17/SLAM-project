@@ -1,7 +1,6 @@
 file(REMOVE_RECURSE
-  "/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgmock.pdb"
-  "/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/lib/libgmock.so"
-  "CMakeFiles/gmock.dir/__/googletest/src/gtest-all.cc.o"
+  "../../bin/libgmock.pdb"
+  "../../lib/libgmock.so"
   "CMakeFiles/gmock.dir/src/gmock-all.cc.o"
 )
 

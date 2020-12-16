@@ -2,7 +2,7 @@
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
-  set(CMAKE_INSTALL_PREFIX "/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/install")
+  set(CMAKE_INSTALL_PREFIX "/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/install")
 endif()
 string(REGEX REPLACE "/$" "" CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}")
 
@@ -39,7 +39,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/build/gtest/googlemock/cmake_install.cmake")
+  include("/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/build/gtest/googlemock/cmake_install.cmake")
 
 endif()
 

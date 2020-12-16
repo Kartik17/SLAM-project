@@ -67,14 +67,14 @@ set(mask_generation_CONFIG_INCLUDED TRUE)
 
 # set variables for source/devel/install prefixes
 if("FALSE" STREQUAL "TRUE")
-  set(mask_generation_SOURCE_PREFIX /home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/src/mask_generation)
-  set(mask_generation_DEVEL_PREFIX /home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/devel)
+  set(mask_generation_SOURCE_PREFIX /media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/src/mask_generation)
+  set(mask_generation_DEVEL_PREFIX /media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/devel)
   set(mask_generation_INSTALL_PREFIX "")
   set(mask_generation_PREFIX ${mask_generation_DEVEL_PREFIX})
 else()
   set(mask_generation_SOURCE_PREFIX "")
   set(mask_generation_DEVEL_PREFIX "")
-  set(mask_generation_INSTALL_PREFIX /home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/install)
+  set(mask_generation_INSTALL_PREFIX /media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/install)
   set(mask_generation_PREFIX ${mask_generation_INSTALL_PREFIX})
 endif()
 
@@ -154,7 +154,7 @@ foreach(library ${libraries})
     set(lib_path "")
     set(lib "${library}-NOTFOUND")
     # since the path where the library is found is returned we have to iterate over the paths manually
-    foreach(path /home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/install/lib;/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/devel/lib;/opt/ros/melodic/lib)
+    foreach(path /media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/install/lib;/home/sbpl/catkin_ws/devel/lib;/opt/ros/noetic/lib)
       find_library(lib ${library}
         PATHS ${path}
         NO_DEFAULT_PATH NO_CMAKE_FIND_ROOT_PATH)

@@ -26,13 +26,13 @@
 #include <unistd.h>
 
 #include<opencv2/core/core.hpp>
-// #include<opencv2/imgcodecs/legacy/constants_c.h>
+#include<opencv2/imgcodecs/legacy/constants_c.h>
 
 #include<System.h>
 
 using namespace std;
 
-#define ORBSLAMMASK 1
+// #define ORBSLAMMASK 1
 
 void LoadImages(const string &strAssociationFilename, vector<string> &vstrImageFilenamesRGB,
                 vector<string> &vstrImageFilenamesD, vector<double> &vTimestamps);

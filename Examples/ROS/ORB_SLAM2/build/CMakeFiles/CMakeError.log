@@ -1,24 +1,21 @@
 Performing C SOURCE FILE Test CMAKE_HAVE_LIBC_PTHREAD failed with the following output:
-Change Dir: /home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp
+Change Dir: /media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_71f24/fast && /usr/bin/make -f CMakeFiles/cmTC_71f24.dir/build.make CMakeFiles/cmTC_71f24.dir/build
-make[1]: Entering directory '/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_71f24.dir/src.c.o
-/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_71f24.dir/src.c.o   -c /home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp/src.c
-Linking C executable cmTC_71f24
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_71f24.dir/link.txt --verbose=1
-/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_71f24.dir/src.c.o  -o cmTC_71f24 
-CMakeFiles/cmTC_71f24.dir/src.c.o: In function `main':
-src.c:(.text+0x3e): undefined reference to `pthread_create'
-src.c:(.text+0x4a): undefined reference to `pthread_detach'
-src.c:(.text+0x5b): undefined reference to `pthread_join'
-src.c:(.text+0x6f): undefined reference to `pthread_atfork'
+Run Build Command(s):/usr/bin/make cmTC_07fff/fast && /usr/bin/make -f CMakeFiles/cmTC_07fff.dir/build.make CMakeFiles/cmTC_07fff.dir/build
+make[1]: Entering directory '/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_07fff.dir/src.c.o
+/usr/bin/cc   -DCMAKE_HAVE_LIBC_PTHREAD   -o CMakeFiles/cmTC_07fff.dir/src.c.o   -c /media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp/src.c
+Linking C executable cmTC_07fff
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_07fff.dir/link.txt --verbose=1
+/usr/bin/cc  -DCMAKE_HAVE_LIBC_PTHREAD    -rdynamic CMakeFiles/cmTC_07fff.dir/src.c.o  -o cmTC_07fff 
+/usr/bin/ld: CMakeFiles/cmTC_07fff.dir/src.c.o: in function `main':
+src.c:(.text+0x46): undefined reference to `pthread_create'
+/usr/bin/ld: src.c:(.text+0x52): undefined reference to `pthread_detach'
+/usr/bin/ld: src.c:(.text+0x63): undefined reference to `pthread_join'
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_71f24.dir/build.make:86: recipe for target 'cmTC_71f24' failed
-make[1]: *** [cmTC_71f24] Error 1
-make[1]: Leaving directory '/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
-Makefile:121: recipe for target 'cmTC_71f24/fast' failed
-make: *** [cmTC_71f24/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_07fff.dir/build.make:87: cmTC_07fff] Error 1
+make[1]: Leaving directory '/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_07fff/fast] Error 2
 
 
 Source file was:
@@ -42,22 +39,20 @@ int main(void)
 }
 
 Determining if the function pthread_create exists in the pthreads failed with the following output:
-Change Dir: /home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp
+Change Dir: /media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp
 
-Run Build Command(s):/usr/bin/make cmTC_98dde/fast && /usr/bin/make -f CMakeFiles/cmTC_98dde.dir/build.make CMakeFiles/cmTC_98dde.dir/build
-make[1]: Entering directory '/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
-Building C object CMakeFiles/cmTC_98dde.dir/CheckFunctionExists.c.o
-/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_98dde.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.15/Modules/CheckFunctionExists.c
-Linking C executable cmTC_98dde
-/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_98dde.dir/link.txt --verbose=1
-/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_98dde.dir/CheckFunctionExists.c.o  -o cmTC_98dde -lpthreads 
+Run Build Command(s):/usr/bin/make cmTC_d6c8e/fast && /usr/bin/make -f CMakeFiles/cmTC_d6c8e.dir/build.make CMakeFiles/cmTC_d6c8e.dir/build
+make[1]: Entering directory '/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
+Building C object CMakeFiles/cmTC_d6c8e.dir/CheckFunctionExists.c.o
+/usr/bin/cc   -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_d6c8e.dir/CheckFunctionExists.c.o   -c /usr/share/cmake-3.16/Modules/CheckFunctionExists.c
+Linking C executable cmTC_d6c8e
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_d6c8e.dir/link.txt --verbose=1
+/usr/bin/cc  -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_d6c8e.dir/CheckFunctionExists.c.o  -o cmTC_d6c8e  -lpthreads 
 /usr/bin/ld: cannot find -lpthreads
 collect2: error: ld returned 1 exit status
-CMakeFiles/cmTC_98dde.dir/build.make:86: recipe for target 'cmTC_98dde' failed
-make[1]: *** [cmTC_98dde] Error 1
-make[1]: Leaving directory '/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
-Makefile:121: recipe for target 'cmTC_98dde/fast' failed
-make: *** [cmTC_98dde/fast] Error 2
+make[1]: *** [CMakeFiles/cmTC_d6c8e.dir/build.make:87: cmTC_d6c8e] Error 1
+make[1]: Leaving directory '/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/ORB_SLAM2/build/CMakeFiles/CMakeTmp'
+make: *** [Makefile:121: cmTC_d6c8e/fast] Error 2
 
 
 

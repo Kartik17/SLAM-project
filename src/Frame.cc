@@ -223,6 +223,7 @@ Frame::Frame(const cv::Mat &imGray, const double &timeStamp, ORBextractor* extra
 
 #ifdef ORBSLAMMASK
     // If remove keypoints
+    cout << "Mask applied.\n";
     if(map_present)
         RemoveKeyPoints(semanticmask, imGray.rows, imGray.cols);
 #endif
@@ -267,10 +268,8 @@ void Frame::RemoveKeyPoints(const cv::Mat &semanticmask, int rows, int cols) {
     for (int i = 0; i < N; i++)
     { 
         cv::Scalar intensity = semanticmask.at<uchar>(cvRound(mvKeys[i].pt.y), cvRound(mvKeys[i].pt.x));
-           
-        cout << "Intensity at pixel: " << intensity << endl;
 
-        if (mvKeys[i].pt.x > 2*cols/3)
+        if (intensity[0] > 100)
         {
             continue;
         }

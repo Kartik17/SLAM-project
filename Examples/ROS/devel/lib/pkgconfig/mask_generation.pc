@@ -1,4 +1,4 @@
-prefix=/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/devel
+prefix=/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/devel
 
 Name: mask_generation
 Description: Description of mask_generation

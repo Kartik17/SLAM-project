@@ -84,14 +84,14 @@ int main(int argc, char** argv)
         for(int i=0;i<nImages;++i)
         {
             // Read image from file
-            image = cv::imread(string(argv[1])+"/"+vstrImageFilenames_rgb[i],CV_LOAD_IMAGE_UNCHANGED);
+            image = cv::imread(string(argv[1])+"/"+vstrImageFilenames_rgb[i],cv::IMREAD_UNCHANGED);
             header.seq = i;
             header.stamp = ros::Time::now();//vTimestamps[i];
             img_bridge = cv_bridge::CvImage(header,sensor_msgs::image_encodings::RGB8,image);
             img_bridge.toImageMsg(img_msg);
             image_pub.publish(img_msg);
             // Read image from file
-            image = cv::imread(string(argv[1])+"/"+vstrImageFilenames_d[i],CV_LOAD_IMAGE_UNCHANGED);
+            image = cv::imread(string(argv[1])+"/"+vstrImageFilenames_d[i],cv::IMREAD_UNCHANGED);
             img_bridge = cv_bridge::CvImage(header,sensor_msgs::image_encodings::TYPE_16UC1,image);
             img_bridge.toImageMsg(img_msg);
             image_pub2.publish(img_msg);

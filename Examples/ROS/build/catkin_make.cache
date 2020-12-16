@@ -1,2 +1,2 @@
 mask_generation
--DCATKIN_DEVEL_PREFIX=/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/devel -DCMAKE_INSTALL_PREFIX=/home/lakshmi/SLAM/ORB_SLAM2/Examples/ROS/install -G Unix Makefiles
+-DCATKIN_DEVEL_PREFIX=/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/devel -DCMAKE_INSTALL_PREFIX=/media/sbpl/A69AFABA9AFA85D9/guru/fall2020/courses/slam/project/SLAM-project/ORB_SLAM2/Examples/ROS/install -G Unix Makefiles
