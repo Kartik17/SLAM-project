@@ -6,7 +6,7 @@ We  present  a  module  that  detects and tracks the dynamic objects in a scene 
 ## Install ORBSLAM-2
 To Install and Run ORB SLAM please refer to the README.md of ORB SLAM
 
-## Install Environment
+## Install Environment (for Detectron2 dependencies)
 conda env create -f environment.yml
 
 ## Dataset preparation
