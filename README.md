@@ -79,7 +79,7 @@ The will be generated in ./masks folder.
 ### TUM Dataset
 1. Associate RGB images and depth images using the python script associate.py. We already provide associations for some of the sequences in Examples/RGB-D/associations/. You can generate your own associations file executing:
 ```
-python associate.py PATH_TO_SEQUENCE/rgb.txt PATH_TO_SEQUENCE/depth.txt > associations.txt
+python associate_lks.py PATH_TO_SEQUENCE/rgb.txt PATH_TO_SEQUENCE/depth.txt > associations.txt
 ```
 2. Now we need to refine the masks as per the dataset and send them in proper folder by executing:
 ```
