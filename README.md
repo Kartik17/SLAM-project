@@ -26,7 +26,7 @@ seq/
 
 KITTI Dataset
 
-Download the dataset (grayscale images) from http://www.cvlibs.net/datasets/kitti/eval_odometry.php
+Download the dataset from http://www.cvlibs.net/datasets/kitti/eval_odometry.php
 ```
 Nr.     Sequence name     Start   End
 ---------------------------------------
