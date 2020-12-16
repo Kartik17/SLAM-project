@@ -42,7 +42,7 @@ trajectory and the estimated trajectory.
 import sys
 import numpy
 import argparse
-import associate
+import associate_tum
 
 def align(model,data):
     """Align two trajectories using the method of Horn (closed-form).
@@ -126,10 +126,10 @@ if __name__=="__main__":
     parser.add_argument('--verbose', help='print all evaluation data (otherwise, only the RMSE absolute translational error in meters after alignment will be printed)', action='store_true')
     args = parser.parse_args()
 
-    first_list = associate.read_file_list(args.first_file)
-    second_list = associate.read_file_list(args.second_file)
+    first_list = associate_tum.read_file_list(args.first_file)
+    second_list = associate_tum.read_file_list(args.second_file)
 
-    matches = associate.associate(first_list, second_list,float(args.offset),float(args.max_difference))    
+    matches = associate_tum.associate(first_list, second_list,float(args.offset),float(args.max_difference))    
     if len(matches)<2:
         sys.exit("Couldn't find matching timestamp pairs between groundtruth and estimated trajectory! Did you choose the correct sequence?")
 

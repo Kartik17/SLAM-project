@@ -68,7 +68,7 @@ def read_file_list(filename):
     list = [(float(l[0]),l[1:]) for l in list if len(l)>1]
     return dict(list)
 
-def associate(first_list, second_list, third_list,offset,max_difference):
+def associate(first_list, second_list,offset,max_difference):
     """
     Associate two dictionaries of (stamp,data). As the time stamps never match exactly, we aim 
     to find the closest match for every input tuple.
@@ -83,26 +83,19 @@ def associate(first_list, second_list, third_list,offset,max_difference):
     matches -- list of matched tuples ((stamp1,data1),(stamp2,data2))
     
     """
-    first_keys = list(first_list) #.keys()
-    second_keys = list(second_list) #.keys()
-    third_keys = list(third_list)
+    first_keys = list(first_list.keys())
+    second_keys = list(second_list.keys())
     potential_matches = [(abs(a - (b + offset)), a, b) 
                          for a in first_keys 
                          for b in second_keys 
                          if abs(a - (b + offset)) < max_difference]
     potential_matches.sort()
-    
-    new_matches = [(a, b, c) 
-                         for c in third_keys
-                         for _,a,b in potential_matches 
-                         if abs(a - (c + offset)) < max_difference]
     matches = []
-    for a, b, c in new_matches:
-        if a in first_keys and b in second_keys and c in third_keys:
+    for diff, a, b in potential_matches:
+        if a in first_keys and b in second_keys:
             first_keys.remove(a)
             second_keys.remove(b)
-            third_keys.remove(c)
-            matches.append((a, b, c))
+            matches.append((a, b))
     
     matches.sort()
     return matches
@@ -115,7 +108,6 @@ if __name__ == '__main__':
     ''')
     parser.add_argument('first_file', help='first text file (format: timestamp data)')
     parser.add_argument('second_file', help='second text file (format: timestamp data)')
-    parser.add_argument('third_file', help='second text file (format: timestamp data)')
     parser.add_argument('--first_only', help='only output associated lines from first file', action='store_true')
     parser.add_argument('--offset', help='time offset added to the timestamps of the second file (default: 0.0)',default=0.0)
     parser.add_argument('--max_difference', help='maximally allowed time difference for matching entries (default: 0.02)',default=0.02)
@@ -123,11 +115,9 @@ if __name__ == '__main__':
 
     first_list = read_file_list(args.first_file)
     second_list = read_file_list(args.second_file)
-    third_list = read_file_list(args.third_file)
 
+    matches = associate(first_list, second_list,float(args.offset),float(args.max_difference))    
 
-    matches = associate(first_list, second_list, third_list,float(args.offset),float(args.max_difference))    
-    
     if args.first_only:
         for a,b in matches:
             print("%f %s"%(a," ".join(first_list[a])))
