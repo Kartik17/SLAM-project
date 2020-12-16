@@ -167,5 +167,7 @@ python evaluate_rpe_tum.py PATH_TO_SEQUENCE/groundtruth.txt PATH_TO_ORB_OUTPUT/K
 ## Reference Repositories
 
 [1] https://github.com/raulmur/ORB_SLAM2
+
 [2] https://github.com/abewley/sort
+
 [3] https://github.com/facebookresearch/Detectron
