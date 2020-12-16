@@ -130,6 +130,14 @@ python evaluate_rpe_tum.py PATH_TO_SEQUENCE/groundtruth.txt PATH_TO_ORB_OUTPUT/K
 | walking_rpy    |   0.98395     | 0.20377 | 79.29006 |
 | walking_halfsphere    |    0.77262    | 0.16220 | 79.00567 |
 
+#### Relative Pose Error (RPE) for TUM-RGBD Dataset
+| Sequences      | ORB-SLAM2 | ORB-SLAM2 Masked | % Improvement |
+|----------------|---------------|-------------|-------------|
+| walking_static |   0.30569     |   0.02567   | 91.600 |
+| walking_xyz    |    0.72717    | 0.03880 | 94.663 |
+| walking_rpy    |   1.17494     | 0.23296 | 80.172 |
+| walking_halfsphere    |    0.76851    | 0.22975 | 70.102 |
+
 ## Videos
 
 
