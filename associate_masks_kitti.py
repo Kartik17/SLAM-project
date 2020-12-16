@@ -40,16 +40,10 @@ if __name__ == '__main__':
     for i in range(len(rgb)):
         if (j< len(masks) and rgb[i][0:6] == masks[j][4:10]): 
             image = cv2.imread(os.path.join(second_folder,masks[j]),cv2.IMREAD_GRAYSCALE)
-            #print("matched",rgb[i],masks[j])
-            #print(os.path.join(path,rgb[i]))
             cv2.imwrite(os.path.join(path,rgb[i]), image)
-            # os.rename(os.path.join(args.second_folder,masks[j]),os.path.join(args.second_folder,masks[j][0:17]+'.png'))
             j += 1
         else:
             blank_image = np.zeros(image.shape, dtype=np.uint8)
-            #print(blank_image, blank_image)
-            #print("didn't match i ",i,rgb[i][0:17])
-            #print(os.path.join(path,rgb[i]))
             cv2.imwrite(os.path.join(path,rgb[i]),blank_image)
 
     
