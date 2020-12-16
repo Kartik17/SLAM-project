@@ -17,7 +17,8 @@ chmod +x build.sh
 ```
 
 In case of issues please refer to the README.md of ORB_SLAM2
-
+## Install Detectron-2
+Follow the install.md at the detectron 2 repo: https://github.com/facebookresearch/Detectron
 ## Install Environment (for Detectron2 dependencies)
 conda env create -f environment.yml
 
