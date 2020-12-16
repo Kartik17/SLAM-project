@@ -4,20 +4,7 @@
 We  present  a  module  that  detects and tracks the dynamic objects in a scene using Deep Learning and  Kalman  Filter  respectively.  The  module  is  added  to  the existing SLAM system - ORBSLAM2 and results in improvingtheir robustness and accuracy in highly dynamic environments.We combine the instance segmentation and Object Tracking to generate masks for the dynamic objects in the scene, so as to not pass  ORB  features  of  the  masked  area  to  the  SLAM  pipeline.To  determine  which  objects  are  actually  moving,  we  segments potential  classes  of  dynamic  objects  such  as  person,  car,  chair etc. and then track the Bounding box in each each frame using Multi  Object  tracking  -  SORT.  Using  the  Depth  image  and Camera  Pose  generated  from  the  Slam  system  we  determine the(X, Y, Z)world of  a  object  and  pass  it  to  a  Kalman  Filter to  track  it  state.  Finally  based  on  the  velocity  of  the  object we  determine  whether  the  object  is  dynamic  or  not.  We  have evaluated our method on sequences of TUM RGBD and KITTI dataset using ORB-SLAM 2 [1]. Both the datasets are publicly available. Finally the results show that our approach improves the  accuracy  and  robustness  of  ORB-SLAM  2,  especially  inhighly  dynamic  environments.
 
 ## Install ORBSLAM-2
-Clone the repository:
-
-Replace the folders 'src' 'include' 'Examples' 'lib' that are inside the ORB_SLAM2 with the folders that's in the main repository.
-
-We provide a script build.sh to build the Thirdparty libraries and ORB-SLAM2. Please make sure you have installed all required dependencies.
-Execute:
-```
-cd ORB_SLAM2
-chmod +x build.sh
-./build.sh
-```
-
-(In case of issue please refer to the README.md of ORB_SLAM2 main repository)
-
+To Install and Run ORB SLAM please refer to the README.md of ORB SLAM
 
 ## Install Environment (for Detectron2 dependencies)
 conda env create -f environment.yml
@@ -135,11 +122,35 @@ python evaluate_rpe_tum.py PATH_TO_SEQUENCE/groundtruth.txt PATH_TO_ORB_OUTPUT/K
 
 ## Results
 
-#### RMSE Absolute Trajectory Error (ATE) on TUM-RGBD Dataset
-| Sequences      | ORB-SLAM2 | ORB-SLAM2 Masked |
-|----------------|---------------|-------------|
-| walking_static | 0.4030m       | 0.0081m     |
-| walking_xyz    | 0.1780m       | **0.0247m** |
+#### Absolute Trajectory Error (ATE) for TUM-RGBD Dataset
+| Sequences      | ORB-SLAM2 | ORB-SLAM2 Masked | % Improvement |
+|----------------|---------------|-------------|-------------|
+| walking_static |   0.27830     |   0.01560   | 94.39286 |
+| walking_xyz    |    0.57369    | 0.01965 | 96.57480 |
+| walking_rpy    |   0.98395     | 0.20377 | 79.29006 |
+| walking_halfsphere    |    0.77262    | 0.16220 | 79.00567 |
+
+#### Relative Pose Error (RPE) for TUM-RGBD Dataset
+| Sequences      | ORB-SLAM2 | ORB-SLAM2 Masked | % Improvement |
+|----------------|---------------|-------------|-------------|
+| walking_static |   0.30569     |   0.02567   | 91.600 |
+| walking_xyz    |    0.72717    | 0.03880 | 94.663 |
+| walking_rpy    |   1.17494     | 0.23296 | 80.172 |
+| walking_halfsphere    |    0.76851    | 0.22975 | 70.102 |
+
+#### Absolute Trajectory Error (ATE) for KITTI Dataset
+| Sequences      | ORB-SLAM2 | ORB-SLAM2 Masked | % Improvement |
+|----------------|---------------|-------------|-------------|
+| 05 |   0.82667     |   0.87581   | -5.94426 |
+| 06    |    0.75378    | 0.64428 | 14.52704 |
+| 07    |   0.53665     | 0.52773 | 1.66103 |
+
+#### Relative Pose Error (RPE) for KITTI Dataset
+| Sequences      | ORB-SLAM2 | ORB-SLAM2 Masked | % Improvement |
+|----------------|---------------|-------------|-------------|
+| 05 |   1.41922     |   1.46528   | -3.24555 |
+| 06    |    1.34517    | 1.25436 | 6.75030 |
+| 07    |   0.95791     | 0.93781 | 2.09813 |
 
 ## Videos
 
