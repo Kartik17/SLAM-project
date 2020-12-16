@@ -8,7 +8,7 @@ We  present  a  module  that  detects and tracks the dynamic objects in a scene 
 ## Install ORBSLAM-2
 Clone the repository
 
-please replace the 'src' 'include' 'Examples' 'lib' folders in ORB_SLAM2 with the ones in main folder
+please replace the **'src' 'include' 'Examples' 'lib'** folders in ORB_SLAM2 with the ones in main folder
 We provide a script build.sh to build the Thirdparty libraries and ORB-SLAM2. Please make sure you have installed all required dependencies (see section 2). Execute:
 ```
 cd ORB_SLAM2
