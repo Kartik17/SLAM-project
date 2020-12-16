@@ -53,14 +53,6 @@ seq/
     -07.txt
     -timestamps.txt
 ```
-## Building the ORB_SLAM2
-We provide a script build.sh to build the Thirdparty libraries and ORB-SLAM2. Please make sure you have installed all required dependencies.
-Execute:
-```
-cd ORB_SLAM2
-chmod +x build.sh
-./build.sh
-```
 
 ## How to Run
 ### Generate Mask
@@ -129,6 +121,12 @@ python evaluate_rpe_tum.py PATH_TO_SEQUENCE/groundtruth.txt PATH_TO_ORB_OUTPUT/K
 
 
 ## Results
+
+#### RMSE Absolute Trajectory Error (ATE) on TUM-RGBD Dataset
+| Sequences      | ORB-SLAM2 | ORB-SLAM2 Masked |
+|----------------|---------------|-------------|
+| walking_static | 0.4030m       | 0.0081m     |
+| walking_xyz    | 0.1780m       | **0.0247m** |
 
 ## Videos
 
