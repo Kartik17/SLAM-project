@@ -43,28 +43,14 @@ if __name__ == '__main__':
     if(not os.path.isdir(os.path.join(path,"rgb"))):
         os.mkdir(os.path.join(path,"rgb"))
     path = path+"/rgb"
-    #os.chdir(path)
     j = 0
     for i in range(len(rgb)):
         if (j< len(masks) and rgb[i][0:17] == masks[j][0:17]): 
-        # if (j< len(masks) and rgb[i][0:6] == masks[j][4:10]): 
             image = cv2.imread(os.path.join(second_folder,masks[j]),cv2.IMREAD_GRAYSCALE)
-            #print("matched",rgb[i],masks[j])
-            #print(os.path.join(path,rgb[i]))
             cv2.imwrite(os.path.join(path,rgb[i]), image)
-            # os.rename(os.path.join(args.second_folder,masks[j]),os.path.join(args.second_folder,masks[j][0:17]+'.png'))
             j += 1
         else:
             blank_image = np.zeros(image.shape, dtype=np.uint8)
-            #print(blank_image, blank_image)
-            #print("didn't match i ",i,rgb[i][0:17])
-            #print("len ", len(rgb))
-            # cv2.imshow("image2 ", blank_image)
-            # cv2.waitKey(10)
-            # cv2.destroyAllWindows()
-            #print("ssss",rgb[i])
-            #print(os.path.join(path,rgb[i]))
-            #skimage.io.imsave(os.path.join(path,rgb[i]),blank_image)
             cv2.imwrite(os.path.join(path,rgb[i]),blank_image)
 
     
