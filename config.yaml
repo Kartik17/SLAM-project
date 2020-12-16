@@ -1,6 +1,7 @@
 DATASET:
   NAME : 'kitti'
   KITTI: 
+    SEQUENCE_NAME: '2011_09_30_drive_0018_sync'
     DATA_PATH  : './seq/2011_09_30_drive_0018_sync/image_02/data/'
     TIMESTAMPS : './seq/2011_09_30_drive_0018_sync/timestamps.txt'
     ODOM_PATH  : './seq/2011_09_30_drive_0018_sync/05.txt'
@@ -22,6 +23,7 @@ DATASET:
       optical_center_y : 1.728540e+02
 
   TUM: 
+    SEQUENCE_NAME: 'rgbd_dataset_freiburg3_walking_static'
     RGB_PATH   : './seq/rgbd_dataset_freiburg3_walking_static/rgb'
     DEPTH_PATH : './seq/rgbd_dataset_freiburg3_walking_static/depth'
     ODOM_PATH  : './seq/rgbd_dataset_freiburg3_walking_static/groundtruth'

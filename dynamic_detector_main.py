@@ -20,6 +20,7 @@ class Detector(object):
 
         if(self.dataset == 'kitti'):
             self.rgb_path = self.config['DATASET']['KITTI']['DATA_PATH']
+            self.sequence_name = self.config['DATASET']['KITTI']['SEQUENCE_NAME']
 
             self.sequence_list = os.listdir(self.rgb_path)
             self.velo2cam = np.array(self.config['DATASET']['KITTI']['TRANSFORMS']['Velo2cam'])
@@ -40,7 +41,7 @@ class Detector(object):
             self.cy = self.config['DATASET']['KITTI']['CAMERA']['optical_center_y']
 
         elif(self.dataset == 'tum'):
-            #self.deepsort = DeepSort(args.deepsort_checkpoint, use_cuda=use_cuda)
+            self.sequence_name = self.config['DATASET']['TUM']['SEQUENCE_NAME']
             self.rgb_path = self.config['DATASET']['TUM']['RGB_PATH']
             self.depth_path = self.config['DATASET']['TUM']['DEPTH_PATH']
             self.odom_path = self.config['DATASET']['TUM']['ODOM_PATH']
@@ -177,9 +178,9 @@ class Detector(object):
 
             elif(self.dataset == 'kitti'):
                 rgb_name= sequence_list 
-                img_path = os.path.join(  './seq/2011_09_30_drive_0018_sync/image_02/data/', rgb_name)
-                oxt_path = os.path.join(  './seq/2011_09_30_drive_0018_sync/oxts/data/', rgb_name.split('.')[0] +  '.txt')
-                depth_path = os.path.join('./seq/2011_09_30_drive_0018_sync/proj_depth/groundtruth/image_02/', rgb_name)
+                img_path = os.path.join(  './seq/' + self.sequence_name +'/image_02/data/', rgb_name)
+                oxt_path = os.path.join(  './seq/' + self.sequence_name +'/oxts/data/', rgb_name.split('.')[0] +  '.txt')
+                depth_path = os.path.join('./seq/' + self.sequence_name +'/proj_depth/groundtruth/image_02/', rgb_name)
  
                 r = np.array(self.kitti_odom[idx-1].split('\n')[0].split(' ')).reshape(3,4).astype('float32')
                 T = np.vstack((r,[0.,0.,0.,1.]))
