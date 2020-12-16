@@ -17,8 +17,14 @@ cd ORB_SLAM2
 chmod +x build.sh
 ./build.sh
 ```
+Incase of this error:
+```
+fatal error: opencv2/imgcodecs/legacy/constants_c.h: No such file or directory
+ #include<opencv2/imgcodecs/legacy/constants_c.h>
+```
+please comment out ``` #include<opencv2/imgcodecs/legacy/constants_c.h>``` from all the files where the error is being generated. This should solve the issue.
 
-In case of issues please refer to the README.md of ORB_SLAM2
+In case of other issues please refer to the README.md of ORB_SLAM2
 ## Install Detectron-2
 Follow the install.md at the detectron 2 repo: https://github.com/facebookresearch/Detectron
 ## Install Environment (for Detectron2 dependencies)
